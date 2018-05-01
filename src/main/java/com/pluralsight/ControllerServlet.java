@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private ArrayList<Book> books = new ArrayList<Book>();
     private BookDAO bookDAO;
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,17 +25,11 @@ public class ControllerServlet extends HttpServlet {
     public void init() {
     		bookDAO = new BookDAO();
     		bookDAO.connect();
-		bookDAO.disconnect();
+				bookDAO.disconnect();
     }
 
     public ControllerServlet() {
         super();
-
-        // Add books to our ArrayList
-        books.add(new Book("To Kill a Mockingbird", "Harper Lee", 5.00f));
-		books.add(new Book("1984", "George Orwell", 5.00f));
-		books.add(new Book("Frankenstein", "author", 5.00f));
-		books.add(new Book("Gone With the Wind", "author", 5.00f));
     }
 
 	/**
@@ -51,10 +44,16 @@ public class ControllerServlet extends HttpServlet {
 				showBookAdmin(request, response);
 			}
 			else if (action.equals("/new")) {
-				addBook(request, response);
+				showNewForm(request, response);
 			}
 			else if (action.equals("/insert")) {
 				insertBook(request, response);
+			}
+			else if (action.equals("/edit")) {
+				showEditForm(request, response);
+			}
+			else if (action.equals("/delete")) {
+				deleteBook(request, response);
 			}
 			else {
 				listBooks(request, response);
@@ -83,10 +82,22 @@ public class ControllerServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	private void addBook(HttpServletRequest request, HttpServletResponse response)
+	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookForm.jsp");
 		dispatcher.forward(request, response);
+	}
+
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("This is the showEditForm() method.");
+	}
+
+	private void deleteBook(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		out.println("This is the deleteBook() method.");
 	}
 
 	private void insertBook(HttpServletRequest request, HttpServletResponse response)
@@ -96,7 +107,6 @@ public class ControllerServlet extends HttpServlet {
 		String priceString = request.getParameter("bookprice");
 
 		Book newBook = new Book(title, author, Float.parseFloat(priceString));
-		books.add(newBook);
 
 		bookDAO.insertBook(newBook);
 		response.sendRedirect("list");

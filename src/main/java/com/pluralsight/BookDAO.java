@@ -27,7 +27,7 @@ public class BookDAO {
             	// Create table
 
                 String sql = "CREATE TABLE book " +
-                               "(id INT PRIMARY KEY," +
+                               "(id INTEGER PRIMARY KEY NOT NULL," +
                                " title TEXT NOT NULL, " +
                                " author TEXT NOT NULL, " +
                                " price REAL)";
@@ -68,11 +68,12 @@ public class BookDAO {
 	        ResultSet resultSet = statement.executeQuery(sql);
 
 	        while (resultSet.next()) {
+              int id = resultSet.getInt("id");
 	            String title = resultSet.getString("title");
 	            String author = resultSet.getString("author");
 	            float price = resultSet.getFloat("price");
 
-	            Book book = new Book(title, author, price);
+	            Book book = new Book(id, title, author, price);
 	            listBook.add(book);
 	        }
 
