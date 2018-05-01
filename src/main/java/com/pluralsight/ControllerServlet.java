@@ -53,9 +53,6 @@ public class ControllerServlet extends HttpServlet {
 			else if (action.equals("/insert")) {
 				insertBook(request, response);
 			}
-			else if (action.equals("/login")) {
-				showLogin(request, response);
-			}
 			else {
 				listBooks(request, response);
 			}
@@ -63,12 +60,6 @@ public class ControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private void showLogin(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookStoreLogin.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	private void listBooks(HttpServletRequest request, HttpServletResponse response)

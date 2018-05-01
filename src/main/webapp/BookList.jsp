@@ -14,9 +14,8 @@
 	<ul>
 	  <li><a class="active" href="list">Book Listing</a></li>
 	  <li><a href="new">Add Book</a></li>
-	  <li><a href="login">Login</a></li>
 	</ul>
-	
+
     <div class="container">
 	    <div class="booktable">
 	        <table border="1" cellpadding="5">

@@ -10,11 +10,10 @@
 	<ul>
 	  <li><a href="list">Book Listing</a></li>
 	  <li><a class="active" href="new">Add Book</a></li>
-	  <li><a href="login">Login</a></li>
 	</ul>
 
 <div class="container">
-            
+
 	<form name="book_form" method="post" action="insert">
 	<h2>New Book Form</h2>
 	  <p><label>Title:</label>
