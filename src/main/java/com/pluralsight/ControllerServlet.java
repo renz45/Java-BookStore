@@ -47,7 +47,10 @@ public class ControllerServlet extends HttpServlet {
 		String action = request.getPathInfo();
 
 		try {
-			if (action.equals("/new")) {
+			if (action.equals("/admin")) {
+				showBookAdmin(request, response);
+			}
+			else if (action.equals("/new")) {
 				addBook(request, response);
 			}
 			else if (action.equals("/insert")) {
@@ -60,6 +63,15 @@ public class ControllerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void showBookAdmin(HttpServletRequest request, HttpServletResponse response)
+			throws ClassNotFoundException, SQLException, ServletException, IOException {
+		ArrayList<Book> books_list = bookDAO.listAllBooks();
+
+		request.setAttribute("books", books_list);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/BookAdmin.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void listBooks(HttpServletRequest request, HttpServletResponse response)

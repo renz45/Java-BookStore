@@ -7,9 +7,10 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
-	<ul>
+  <ul>
 	  <li><a href="list">Book Listing</a></li>
-	  <li><a class="active" href="new">Add Book</a></li>
+    <li><a class="active" href="admin">Admin</a></li>
+    <li><a href="showcart">Cart</a></li>
 	</ul>
 
 <div class="container">

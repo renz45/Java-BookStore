@@ -12,8 +12,8 @@
 
 <body>
 	<ul>
-	  <li><a class="active" href="list">Book Listing</a></li>
-    <li><a href="admin">Admin</a></li>
+	  <li><a href="list">Book Listing</a></li>
+    <li><a class="active" href="admin">Admin</a></li>
     <li><a href="showcart">Cart</a></li>
 	</ul>
 
@@ -25,7 +25,8 @@
 	                <th>Title</th>
 	                <th>Author</th>
 	                <th>Price</th>
-                  <th></th>
+                  <th>In Stock</th>
+                  <th><a href="new">Add Book</a></th>
 	            </tr>
 
 	 			<c:forEach items="${books}" var="item">
@@ -33,7 +34,8 @@
 	                    <td> ${ item.getTitle() } </td>
 	                    <td> ${ item.getAuthor() } </td>
 	                    <td> <fmt:formatNumber value = "${ item.getPrice() }" type = "currency"/>  </td>
-                      <td> <a href="#addcart">Add to Cart</a> </td>
+                      <td> 10 </td>
+                      <td> <a href="#edit">Edit</a>  <a href="#delete">Delete</a> </td>
 	                </tr>
 	            </c:forEach>
 	        </table>
