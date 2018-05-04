@@ -6,9 +6,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import java.sql.Statement;
+
+import java.util.ArrayList;
 
 public class BookDAO {
     private Connection jdbcConnection;
@@ -17,49 +17,9 @@ public class BookDAO {
       jdbcConnection = connection;
     }
 
-    public void connect()  {
-    	//try {
-            //System.out.println("Opened database successfully");
-
-         //    DatabaseMetaData meta = jdbcConnection.getMetaData();
-         //    ResultSet res = meta.getTables(null, null, null, new String[] {"TABLE"});
-         //    Statement stmt = jdbcConnection.createStatement();
-         //    if (!res.next()) {
-         //    	// Create table
-         //
-         //        String sql = "CREATE TABLE book " +
-         //                       "(id INTEGER PRIMARY KEY NOT NULL," +
-         //                       " title TEXT NOT NULL, " +
-         //                       " author TEXT NOT NULL, " +
-         //                       " price REAL)";
-         //        stmt.executeUpdate(sql);
-         //
-         //        sql = "INSERT INTO book (title, author, price) VALUES (\"1984\", \"George Orwell\", 1.00)";
-         //        stmt.executeUpdate(sql);
-         //
-         //        stmt.close();
-         //        //jdbcConnection.close();
-         //    }
-         // } catch ( Exception e ) {
-         //    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-         //    System.exit(0);
-         // }
-    }
-
-    public void disconnect() {
-    //     try {
-		// 	if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-		// 	    jdbcConnection.close();
-		// 	}
-		// } catch (SQLException e) {
-		// 	e.printStackTrace();
-		// }
-    }
-
     public Book getBook(int id) {
       Book book = null;
       String sql = "SELECT * FROM book WHERE id = ?";
-      connect();
 
       try {
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -85,14 +45,12 @@ public class BookDAO {
     }
 
     public ArrayList<Book> listAllBooks() {
-        ArrayList<Book> listBook = new ArrayList<>();
+      ArrayList<Book> listBook = new ArrayList<>();
 
-        String sql = "SELECT * FROM book";
+      String sql = "SELECT * FROM book";
 
-        connect();
-
-		try {
-			Statement statement = jdbcConnection.createStatement();
+		  try {
+			    Statement statement = jdbcConnection.createStatement();
 
 	        ResultSet resultSet = statement.executeQuery(sql);
 
@@ -108,18 +66,14 @@ public class BookDAO {
 
 	        resultSet.close();
 	        statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-        disconnect();
-
+  		} catch (SQLException e) {
+  			e.printStackTrace();
+  		}
         return listBook;
     }
 
     public boolean insertBook(Book book)  {
         String sql = "INSERT INTO book (title, author, price) VALUES (?, ?, ?)";
-        connect();
 
         try {
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -129,29 +83,25 @@ public class BookDAO {
 
 	        boolean rowInserted = statement.executeUpdate() > 0;
 	        statement.close();
-	        disconnect();
 	        return rowInserted;
         } catch (SQLException e) {
         		e.printStackTrace();
         }
 
         return false;
-
     }
 
     public void deleteBook(int id) {
       String sql = "DELETE FROM book WHERE id = ?";
-      //connect();
 
       try {
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
         statement.setInt(1, id);
-        //
-         statement.executeUpdate();
+        statement.executeUpdate();
 
         statement.close();
       } catch (SQLException e) {
-          e.printStackTrace();
+        e.printStackTrace();
       }
     }
 }

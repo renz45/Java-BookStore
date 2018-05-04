@@ -19,26 +19,21 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 public class ControllerServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-		private Connection jdbcConnection;
+		private static final long serialVersionUID = 1L;
+		private DBConnection dbConnection;
     private BookDAO bookDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
 
     public void init() {
-			try {
-				Class.forName("org.sqlite.JDBC");
-				jdbcConnection = DriverManager.getConnection("jdbc:sqlite:book_store.db");
-    		bookDAO = new BookDAO(jdbcConnection);
-		} catch ( Exception e ) {
-			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-			 System.exit(0);
-		}
-
-    		bookDAO.connect();
-				bookDAO.disconnect();
+			dbConnection = new DBConnection();
+			bookDAO = new BookDAO(dbConnection.getConnection());
     }
+
+		public void destroy() {
+			dbConnection.disconnect();
+		}
 
     public ControllerServlet() {
         super();
