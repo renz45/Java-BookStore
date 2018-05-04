@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,13 +20,22 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+		private Connection jdbcConnection;
     private BookDAO bookDAO;
     /**
      * @see HttpServlet#HttpServlet()
      */
 
     public void init() {
-    		bookDAO = new BookDAO();
+			try {
+				Class.forName("org.sqlite.JDBC");
+				jdbcConnection = DriverManager.getConnection("jdbc:sqlite:book_store.db");
+    		bookDAO = new BookDAO(jdbcConnection);
+		} catch ( Exception e ) {
+			 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			 System.exit(0);
+		}
+
     		bookDAO.connect();
 				bookDAO.disconnect();
     }

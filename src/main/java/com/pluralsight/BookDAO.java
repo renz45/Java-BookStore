@@ -12,47 +12,48 @@ import java.sql.Statement;
 
 public class BookDAO {
     private Connection jdbcConnection;
-
+    public BookDAO(Connection connection)
+    {
+      jdbcConnection = connection;
+    }
 
     public void connect()  {
-    	try {
-            Class.forName("org.sqlite.JDBC");
-            jdbcConnection = DriverManager.getConnection("jdbc:sqlite:book_store.db");
-            System.out.println("Opened database successfully");
+    	//try {
+            //System.out.println("Opened database successfully");
 
-            DatabaseMetaData meta = jdbcConnection.getMetaData();
-            ResultSet res = meta.getTables(null, null, null, new String[] {"TABLE"});
-            Statement stmt = jdbcConnection.createStatement();
-            if (!res.next()) {
-            	// Create table
-
-                String sql = "CREATE TABLE book " +
-                               "(id INTEGER PRIMARY KEY NOT NULL," +
-                               " title TEXT NOT NULL, " +
-                               " author TEXT NOT NULL, " +
-                               " price REAL)";
-                stmt.executeUpdate(sql);
-
-                sql = "INSERT INTO book (title, author, price) VALUES (\"1984\", \"George Orwell\", 1.00)";
-                stmt.executeUpdate(sql);
-
-                stmt.close();
-                jdbcConnection.close();
-            }
-         } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
-         }
+         //    DatabaseMetaData meta = jdbcConnection.getMetaData();
+         //    ResultSet res = meta.getTables(null, null, null, new String[] {"TABLE"});
+         //    Statement stmt = jdbcConnection.createStatement();
+         //    if (!res.next()) {
+         //    	// Create table
+         //
+         //        String sql = "CREATE TABLE book " +
+         //                       "(id INTEGER PRIMARY KEY NOT NULL," +
+         //                       " title TEXT NOT NULL, " +
+         //                       " author TEXT NOT NULL, " +
+         //                       " price REAL)";
+         //        stmt.executeUpdate(sql);
+         //
+         //        sql = "INSERT INTO book (title, author, price) VALUES (\"1984\", \"George Orwell\", 1.00)";
+         //        stmt.executeUpdate(sql);
+         //
+         //        stmt.close();
+         //        //jdbcConnection.close();
+         //    }
+         // } catch ( Exception e ) {
+         //    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+         //    System.exit(0);
+         // }
     }
 
     public void disconnect() {
-        try {
-			if (jdbcConnection != null && !jdbcConnection.isClosed()) {
-			    jdbcConnection.close();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+    //     try {
+		// 	if (jdbcConnection != null && !jdbcConnection.isClosed()) {
+		// 	    jdbcConnection.close();
+		// 	}
+		// } catch (SQLException e) {
+		// 	e.printStackTrace();
+		// }
     }
 
     public Book getBook(int id) {
@@ -138,4 +139,19 @@ public class BookDAO {
 
     }
 
+    public void deleteBook(int id) {
+      String sql = "DELETE FROM book WHERE id = ?";
+      //connect();
+
+      try {
+        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+        statement.setInt(1, id);
+        //
+         statement.executeUpdate();
+
+        statement.close();
+      } catch (SQLException e) {
+          e.printStackTrace();
+      }
+    }
 }
