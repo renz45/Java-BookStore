@@ -26,7 +26,6 @@ public class SubProject1_Task3_IT {
     public void deleteBook_method_exists() throws Exception {
       Method method = null;
       String sql = "DELETE FROM book WHERE id = ?";
-      Class.forName("org.sqlite.JDBC");
       Connection spyConnection = Mockito.mock(Connection.class);
       PreparedStatement mockStatement = Mockito.mock(PreparedStatement.class);
       BookDAO bookDAO = new BookDAO(spyConnection);

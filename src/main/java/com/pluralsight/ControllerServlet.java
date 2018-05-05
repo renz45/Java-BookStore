@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.inject.Inject;
 /**
  * Servlet implementation class HelloWorld
  */
@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerServlet extends HttpServlet {
 		private static final long serialVersionUID = 1L;
 		private DBConnection dbConnection;
+
+		@Inject
     private BookDAO bookDAO;
     /**
      * @see HttpServlet#HttpServlet()
@@ -109,6 +111,10 @@ public class ControllerServlet extends HttpServlet {
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 				int id = Integer.parseInt(request.getParameter("id"));
+				System.out.println("Got here.");
+				bookDAO.deleteBook(id);
+				System.out.println("Got here 2.");
+				response.sendRedirect("list");
 	}
 
 	private void insertBook(HttpServletRequest request, HttpServletResponse response)

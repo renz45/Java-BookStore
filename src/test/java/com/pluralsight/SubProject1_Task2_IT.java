@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -13,7 +16,7 @@ import java.io.*;
 public class SubProject1_Task2_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
-	static String tempID = "1";
+	static String tempID = "0";
 
     // @Test
     // public void controllerservlet_newmethods_getid() throws Exception {
@@ -30,7 +33,9 @@ public class SubProject1_Task2_IT extends Mockito{
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
-        new ControllerServlet().doGet(request, response);
+        ControllerServlet controllerServlet = new ControllerServlet();
+				controllerServlet.init();
+				controllerServlet.doGet(request, response);
        } catch (Exception e) {}
 
        try {
@@ -53,7 +58,10 @@ public class SubProject1_Task2_IT extends Mockito{
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
-        new ControllerServlet().doGet(request, response);
+				 ControllerServlet controllerServlet = new ControllerServlet();
+				 controllerServlet.init();
+ 				 controllerServlet.doGet(request, response);
+				 controllerServlet.destroy();
        } catch (Exception e) {}
 
        try {
