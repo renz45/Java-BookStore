@@ -111,9 +111,7 @@ public class ControllerServlet extends HttpServlet {
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 				int id = Integer.parseInt(request.getParameter("id"));
-				System.out.println("Got here.");
 				bookDAO.deleteBook(id);
-				System.out.println("Got here 2.");
 				response.sendRedirect("list");
 	}
 

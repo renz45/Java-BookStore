@@ -15,18 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
 import java.lang.reflect.Method;
-
 import java.io.*;
-
-
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({BookDAO.class})
 
 public class SubProject1_Task4_IT extends Mockito{
 
@@ -52,21 +42,10 @@ public class SubProject1_Task4_IT extends Mockito{
        HttpServletRequest request = mock(HttpServletRequest.class);
        HttpServletResponse response = mock(HttpServletResponse.class);
 
-       //Connection spyConnection = Mockito.mock(Connection.class);
-       //DBConnection mockDBConnection = Mockito.mock(DBConnection.class);
-       //PreparedStatement mockStatement = Mockito.mock(PreparedStatement.class);
-       //BookDAO mockBookDAO = Mockito.mock(BookDAO.class);
-       //BookDAO bookDAO = new BookDAO(spyConnection);
-       //BookDAO spyBookDAO = Mockito.spy(bookDAO);
-
-			 //PowerMockito.whenNew(BookDAO.class).withArguments(mock, “msg”).thenReturn(spyBookDAO);
        when(request.getPathInfo()).thenReturn("/delete");
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
-         //ControllerServlet controllerServlet = new ControllerServlet();
-         //ControllerServlet spyControllerServlet = Mockito.spy(controllerServlet);
-         //controllerServlet.init();
  				 controllerServlet.doGet(request, response);
        } catch (Exception e) {}
 

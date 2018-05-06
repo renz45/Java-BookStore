@@ -8,8 +8,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.io.*;
 
@@ -18,11 +23,17 @@ public class SubProject1_Task2_IT extends Mockito{
 	static StringWriter stringWriter = new StringWriter();
 	static String tempID = "0";
 
-    // @Test
-    // public void controllerservlet_newmethods_getid() throws Exception {
-    //   verify_getid("/edit");
-    //   verify_getid("/delete");
-    // }
+	@Mock
+  private BookDAO mockBookDAO;
+
+  @InjectMocks
+  private ControllerServlet controllerServlet;
+
+  @Before
+  public void setUp() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
+
     @Test
     public void verify_edit_getid() throws Exception {
        boolean called_getParameter = false;
@@ -33,8 +44,6 @@ public class SubProject1_Task2_IT extends Mockito{
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
-        ControllerServlet controllerServlet = new ControllerServlet();
-				controllerServlet.init();
 				controllerServlet.doGet(request, response);
        } catch (Exception e) {}
 
@@ -58,10 +67,10 @@ public class SubProject1_Task2_IT extends Mockito{
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
-				 ControllerServlet controllerServlet = new ControllerServlet();
-				 controllerServlet.init();
+				 //ControllerServlet controllerServlet = new ControllerServlet();
+				 //controllerServlet.init();
  				 controllerServlet.doGet(request, response);
-				 controllerServlet.destroy();
+				 //controllerServlet.destroy();
        } catch (Exception e) {}
 
        try {
