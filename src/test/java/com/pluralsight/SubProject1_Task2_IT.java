@@ -45,12 +45,13 @@ public class SubProject1_Task2_IT extends Mockito{
 
        try {
 				controllerServlet.doGet(request, response);
+				try {
+           verify(request, atLeast(1)).getParameter("id");
+           called_getParameter = true;
+        } catch (Throwable e) {}
        } catch (Exception e) {}
 
-       try {
-          verify(request, atLeast(1)).getParameter("id");
-          called_getParameter = true;
-       } catch (Throwable e) {}
+
 
        String errorMsg = "After action \"" + "/edit" +
                          "\", did not call getParameter(\"id\").";
