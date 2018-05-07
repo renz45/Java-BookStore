@@ -61,13 +61,13 @@ public class SubProject1_Task4_IT extends Mockito{
           called_sendRedirect = true;
        } catch (Throwable e) {}
 
-       String errorMsg = "In ControllerServlet deleteBook," +
+       String errorMsg = "In ControllerServlet deleteBook()," +
                          " did not call getParameter(\"id\").";
        assertTrue(errorMsg, called_getParameter);
-       errorMsg = "In ControllerServlet deleteBook," +
+       errorMsg = "In ControllerServlet deleteBook()," +
                          " did not call deleteBook(id).";
        assertTrue(errorMsg, called_deleteBook);
-       errorMsg = "In ControllerServlet deleteBook," +
+       errorMsg = "In ControllerServlet deleteBook()," +
                          " did not call sendRedirect(\"list\").";
        assertTrue(errorMsg, called_sendRedirect);
     }
