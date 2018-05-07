@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-public class SubProject1_Task1_IT {
+public class Module1_Task1_IT {
 
 	private String indexUrl;
 	private WebClient webClient;
@@ -32,8 +32,9 @@ public class SubProject1_Task1_IT {
 	    webClient.closeAllWindows();
 	  }
 
+		// Verify the edit and delete hrefs, in BookAdmin.jsp contain the id
     @Test
-	  public void task1() {
+	  public void module1_task1() {
       url_contains_id("Delete");
       url_contains_id("Edit");
     }

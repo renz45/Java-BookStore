@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-public class SubProject1_Task6_IT {
+public class Module2_Task4_IT {
 	private String BOOK_FORM_NAME = "book_form";
 	private String indexUrl;
 	private WebClient webClient;
@@ -37,10 +37,12 @@ public class SubProject1_Task6_IT {
 	    webClient.closeAllWindows();
 	  }
 
+		// Verify they adapted the BookForm.jsp page for editing existing books
+		// and adding new book
+		// In this test check the form input fields have values filled in
     @Test
-	  public void task1() {
+	  public void module2_task4() {
       clickLink("Edit");
-      clickLink("New");
     }
 
 		private void clickLink(String urlStr) {
@@ -59,38 +61,12 @@ public class SubProject1_Task6_IT {
 
 			assertNotNull("Link " + urlStr + " did not work.", nextPage);
 
-			h2_correct(urlStr);
+			inputFields_correct(urlStr);
     }
 
-	  public void h2_correct(String urlStr) {
-      // First check if an H2 exists with text "New Book Form"
-      boolean h2Text_correct = false;
-      DomNodeList< DomElement > list = nextPage.getElementsByTagName( "h2" );
-			String h2Text = "";
-			String desiredText = urlStr + " Book Form";
-			desiredText = desiredText.replaceAll("\\s+","");
-			for( DomElement domElement : list )
-      {
-					h2Text = domElement.getTextContent();
-					h2Text = h2Text.replaceAll("\\s+","");
-          if (h2Text.equals(desiredText))
-            h2Text_correct = true;
-      }
-
-      assertTrue("h2 text = " + h2Text + " , desiredText = " +desiredText, h2Text_correct);
-
-			// Get form and check action
+	  public void inputFields_correct(String urlStr) {
+			// Get form and check Input Fields
 			HtmlForm form = nextPage.getFormByName(BOOK_FORM_NAME);
-			String action = form.getActionAttribute();
-
-			if (urlStr.equals("Edit")) {
-				assertEquals("Form, book_form, action not \"update\".",
-										 "update", action);
-			}
-			else if (urlStr.equals("New")) {
-				assertEquals("Form, book_form, action not \"insert\".",
-										 "insert", action);
-			}
 
 			// If it's Edit Form, there's more to check
 			if (urlStr.equals("Edit")) {

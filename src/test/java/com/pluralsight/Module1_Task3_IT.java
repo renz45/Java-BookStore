@@ -20,10 +20,11 @@ import java.io.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DriverManager.class, PreparedStatement.class, BookDAO.class})
-public class SubProject1_Task3_IT {
+public class Module1_Task3_IT {
 
+    // Verify the deleteBook() method exists in BookDAO
     @Test
-    public void deleteBook_method_exists() throws Exception {
+    public void module1_task3() throws Exception {
       Method method = null;
       String sql = "DELETE FROM book WHERE id = ?";
       Connection spyConnection = Mockito.mock(Connection.class);

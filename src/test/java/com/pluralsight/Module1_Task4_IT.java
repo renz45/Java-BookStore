@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 import java.lang.reflect.Method;
 import java.io.*;
 
-public class SubProject1_Task4_IT extends Mockito{
+public class Module1_Task4_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
 	static String tempID = "0";
@@ -34,8 +34,9 @@ public class SubProject1_Task4_IT extends Mockito{
     MockitoAnnotations.initMocks(this);
   }
 
+		// Verify deleteBook() in ControllerServlet is complete
     @Test
-    public void verify_completed_deletebook() throws Exception {
+    public void module1_task4() throws Exception {
        boolean called_getParameter = false;
        boolean called_sendRedirect = false;
        boolean called_deleteBook = false;

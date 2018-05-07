@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.*;
 
-public class SubProject1_Task8_IT extends Mockito{
+public class Module2_Task6_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
 	static String tempIDStr = "1";
@@ -39,8 +39,9 @@ public class SubProject1_Task8_IT extends Mockito{
     MockitoAnnotations.initMocks(this);
   }
 
+		// Verify updateBook() exists in ControllerServlet
     @Test
-    public void verify_update() throws Exception {
+    public void module2_task6() throws Exception {
        boolean called_getId = false;
        boolean called_getTitle = false;
        boolean called_getAuthor = false;

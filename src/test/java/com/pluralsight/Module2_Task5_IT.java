@@ -20,10 +20,11 @@ import java.io.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DriverManager.class, PreparedStatement.class, BookDAO.class})
-public class SubProject1_Task7_IT {
+public class Module2_Task5_IT {
 
+    // Verify updateBook() method exists in BookDAO
     @Test
-    public void updateBook_method_verify() throws Exception {
+    public void module2_Task5() throws Exception {
       Method method = null;
       String sql = "UPDATE book SET title = ?, author = ?, price = ?" +
                    " WHERE book_id = ?";
