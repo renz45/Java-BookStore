@@ -27,7 +27,7 @@ public class Module2_Task5_IT {
     public void module2_Task5() throws Exception {
       Method method = null;
       String sql = "UPDATE book SET title = ?, author = ?, price = ?" +
-                   " WHERE book_id = ?";
+                   " WHERE id = ?";
       Connection spyConnection = Mockito.mock(Connection.class);
       PreparedStatement mockStatement = Mockito.mock(PreparedStatement.class);
       BookDAO bookDAO = new BookDAO(spyConnection);
