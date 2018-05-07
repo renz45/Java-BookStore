@@ -92,8 +92,9 @@ public class SubProject1_Task6_IT {
 										 "insert", action);
 			}
 
-			// Get id input if it's Edit Form
+			// If it's Edit Form, there's more to check
 			if (urlStr.equals("Edit")) {
+				//Get id input field
 				try {
 					HtmlInput inputId = form.getInputByName("id");
 
@@ -109,6 +110,36 @@ public class SubProject1_Task6_IT {
 					}
 				} catch (ElementNotFoundException e) {
 					assertTrue("The input field with name \"id\" does not exist.", false);
+				}
+
+				// Get title input field, check value
+				try {
+					HtmlInput inputTitle = form.getInputByName("booktitle");
+					String titleValue = inputTitle.getValueAttribute();
+					assertTrue("Title field value is empty, value is \"" + titleValue + "\".",
+										 titleValue.length() > 0);
+				}catch (ElementNotFoundException e) {
+					assertTrue("The input field with name \"booktitle\" does not exist.", false);
+				}
+
+				// Get author input field, check value
+				try {
+					HtmlInput inputAuthor = form.getInputByName("bookauthor");
+					String authorValue = inputAuthor.getValueAttribute();
+					assertTrue("Author field value is empty, value is \"" + authorValue + "\".",
+										 authorValue.length() > 0);
+				}catch (ElementNotFoundException e) {
+					assertTrue("The input field with name \"bookauthor\" does not exist.", false);
+				}
+
+				// Get price input field, check value
+				try {
+					HtmlInput inputPrice = form.getInputByName("bookprice");
+					String priceValue = inputPrice.getValueAttribute();
+					assertTrue("Price field value is empty, value is \"" + priceValue + "\".",
+										 priceValue.length() > 0);
+				}catch (ElementNotFoundException e) {
+					assertTrue("The input field with name \"bookprice\" does not exist.", false);
 				}
 			}
 	  }
