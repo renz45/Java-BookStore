@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 
 import java.io.*;
 
-public class Module1_Task2a_IT {
+public class Module1_Task2_IT {
 
 	private ControllerServlet controllerServlet;
 
@@ -28,7 +28,7 @@ public class Module1_Task2a_IT {
 
 		// Verify the deleteBook() method exists in ControllerServlet
     @Test
-    public void module1_task2a() throws Exception {
+    public void module1_task2() throws Exception {
       Method method = null;
       try {
         method = Whitebox.getMethod(ControllerServlet.class,

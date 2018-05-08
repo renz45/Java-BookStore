@@ -20,21 +20,23 @@ import java.io.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({DriverManager.class, PreparedStatement.class, BookDAO.class})
-public class Module1_Task5_new_IT {
+public class Module1_Task6_IT {
 
     // Verify the deleteBook() method exists in BookDAO
     @Test
-    public void module1_task3() throws Exception {
+    public void module1_task6() throws Exception {
       Method method = null;
       String sql = "DELETE FROM book WHERE id = ?";
-      Connection mockConnection = Mockito.mock(Connection.class);
+      Connection spyConnection = Mockito.mock(Connection.class);
       PreparedStatement mockStatement = Mockito.mock(PreparedStatement.class);
-      BookDAO bookDAO = new BookDAO(mockConnection);
+      BookDAO bookDAO = new BookDAO(spyConnection);
       BookDAO spyBookDAO = Mockito.spy(bookDAO);
+      boolean called_setInt = false;
+      boolean called_execute = false;
       boolean called_prepareStatement = false;
+      boolean called_close = false;
 
-
-      Mockito.when(mockConnection.prepareStatement(sql)).thenReturn(mockStatement);
+      Mockito.when(spyConnection.prepareStatement(sql)).thenReturn(mockStatement);
 
       try {
          method =  BookDAO.class.getMethod("deleteBook", int.class);
@@ -50,11 +52,21 @@ public class Module1_Task5_new_IT {
       } catch (Exception e) {}
 
       try {
-        Mockito.verify(mockConnection,Mockito.atLeast(1)).prepareStatement(sql);
-        called_prepareStatement = true;
+        Mockito.verify(mockStatement, Mockito.atLeast(1)).setInt(Mockito.anyInt(), Mockito.anyInt());
+        called_setInt = true;
+        Mockito.verify(mockStatement, Mockito.atLeast(1)).executeUpdate();
+        called_execute = true;
+        Mockito.verify(mockStatement, Mockito.atLeast(1)).close();
+        called_close = true;
       } catch (Throwable e) {}
 
-      message = "The method deleteBook() doesn't call prepareStatement() correctly.";
-      assertTrue(message, called_prepareStatement);
+      message = "The method deleteBook() doesn't call setInt().";
+      assertTrue(message, called_setInt);
+
+      message = "The method deleteBook() doesn't call executeUpdate().";
+      assertTrue(message, called_execute);
+
+      message = "The method deleteBook() doesn't call PreparedStatement close().";
+      assertTrue(message, called_close);
     }
 }
