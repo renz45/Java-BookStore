@@ -23,7 +23,7 @@ import java.io.*;
 @PrepareForTest(ControllerServlet.class)
 public class Module1_Task3_new_IT extends Mockito{
     static String tempID = "0";
-    
+
 		// Verify the deleteBook() method exists in ControllerServlet
 		// Since it's private need to verify the lines of code get called
 		// through the /delete action in doGet()
@@ -35,7 +35,7 @@ public class Module1_Task3_new_IT extends Mockito{
        HttpServletResponse response = mock(HttpServletResponse.class);
 
        when(request.getPathInfo()).thenReturn("/delete");
-       //PowerMockito.doNothing().when(controllerServlet, "deleteBook", request, response);
+       PowerMockito.doNothing().when(controllerServlet, "deleteBook", request, response);
        when(request.getParameter("id")).thenReturn(tempID);
 
        try {
