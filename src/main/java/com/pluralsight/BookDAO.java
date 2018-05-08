@@ -116,7 +116,7 @@ public class BookDAO {
           statement.setFloat(3, book.getPrice());
           statement.setInt(4, book.getId());
 
-          statement.executeUpdate();  
+          statement.executeUpdate();
           statement.close();
         } catch(SQLException e) {
           e.printStackTrace();
