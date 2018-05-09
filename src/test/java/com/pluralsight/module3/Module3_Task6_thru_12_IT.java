@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.*;
 
-public class Module2_Task6_IT extends Mockito{
+public class Module3_Task6_thru_12_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
 	static String tempIDStr = "1";
