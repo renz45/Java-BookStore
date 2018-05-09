@@ -24,10 +24,15 @@ import org.mockito.MockingDetails;
 import java.lang.reflect.Method;
 import java.io.*;
 
-public class Module1_Task7_IT extends Mockito{
+public class Module1_Task7_and_8_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
 	static String tempID = "0";
+	static boolean called_getParameter = false;
+	static boolean called_sendRedirect = false;
+	static boolean called_deleteBook = false;
+	static HttpServletRequest request = mock(HttpServletRequest.class);
+	static HttpServletResponse response = mock(HttpServletResponse.class);
 
   @Mock
   private BookDAO mockBookDAO;
@@ -37,33 +42,23 @@ public class Module1_Task7_IT extends Mockito{
 
   @Before
   public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.initMocks(this);
+
+		request = mock(HttpServletRequest.class);
+		response = mock(HttpServletResponse.class);
+
+		when(request.getPathInfo()).thenReturn("/delete");
+		when(request.getParameter("id")).thenReturn(tempID);
+
+		try {
+			controllerServlet.doGet(request, response);
+		} catch (Exception e) {}
   }
 
 		// Verify deleteBook() in ControllerServlet is complete
     @Test
     public void module1_task7() throws Exception {
-       boolean called_getParameter = false;
-       boolean called_sendRedirect = false;
-       boolean called_deleteBook = false;
-       HttpServletRequest request = mock(HttpServletRequest.class);
-       HttpServletResponse response = mock(HttpServletResponse.class);
 
-       when(request.getPathInfo()).thenReturn("/delete");
-       when(request.getParameter("id")).thenReturn(tempID);
-
-       try {
- 				 controllerServlet.doGet(request, response);
-       } catch (Exception e) {}
-
-       try {
-          verify(request, atLeast(1)).getParameter("id");
-          called_getParameter = true;
-       } catch (Throwable e) {}
-
-			 String errorMsg = "In ControllerServlet deleteBook()," +
-			 									" did not call getParameter(\"id\").";
-			 assertTrue(errorMsg, called_getParameter);
 
 			 Method method = null;
 			 try {
@@ -85,19 +80,25 @@ public class Module1_Task7_IT extends Mockito{
 			 }
 			 assertTrue(methodsCalled.contains("deleteBook"));
 
-       try {
-          //verify(mockBookDAO).deleteBook(anyInt());
-          //called_deleteBook = true;
-          verify(response, atLeast(1)).sendRedirect("list");
-          called_sendRedirect = true;
+			 try {
+          verify(request, atLeast(1)).getParameter("id");
+          called_getParameter = true;
        } catch (Throwable e) {}
 
-
-       // errorMsg = "In ControllerServlet deleteBook()," +
-       //                   " did not call deleteBook(id).";
-       // assertTrue(errorMsg, called_deleteBook);
-       errorMsg = "In ControllerServlet deleteBook()," +
-                         " did not call sendRedirect(\"list\").";
-       assertTrue(errorMsg, called_sendRedirect);
+			 String errorMsg = "In ControllerServlet deleteBook()," +
+			 									" did not call getParameter(\"id\").";
+			 assertTrue(errorMsg, called_getParameter);
     }
+
+		@Test
+		public void module1_task8() throws Exception {
+			try {
+				 verify(response, atLeast(1)).sendRedirect("list");
+				 called_sendRedirect = true;
+			} catch (Throwable e) {}
+
+			String errorMsg = "In ControllerServlet deleteBook()," +
+												" did not call sendRedirect(\"list\").";
+			assertTrue(errorMsg, called_sendRedirect);
+		}
 }
