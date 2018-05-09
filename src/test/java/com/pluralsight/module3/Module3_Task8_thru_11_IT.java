@@ -16,12 +16,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.reflect.Whitebox;
-import java.lang.reflect.Method;
-
 import java.io.*;
 
-public class Module3_Task6_thru_12_IT extends Mockito{
+public class Module3_Task8_thru_11_IT extends Mockito{
 
 	static StringWriter stringWriter = new StringWriter();
 	static String tempIDStr = "1";
@@ -66,21 +63,8 @@ public class Module3_Task6_thru_12_IT extends Mockito{
 		} catch (Exception e) {}
   }
 
-		// Verify updateBook() exists in ControllerServlet
-		@Test
-		public void module1_task2() throws Exception {
-			Method method = null;
-			try {
-				method = Whitebox.getMethod(ControllerServlet.class,
-									"deleteBook", HttpServletRequest.class, HttpServletResponse.class);
-			} catch (Exception e) {}
-
-			String errorMsg = "private void deleteBook() does not exist in ControllerServlet";
-			assertNotNull(errorMsg, method);
-		}
-
     @Test
-    public void module3_task7() throws Exception {
+    public void module3_task8() throws Exception {
 			try {
          verify(request).getParameter("id");
          called_getId = true;
@@ -92,12 +76,14 @@ public class Module3_Task6_thru_12_IT extends Mockito{
     }
 
 		@Test
-    public void module3_task8() throws Exception {
+    public void module3_task9() throws Exception {
 			try {
          verify(request).getParameter("booktitle");
          called_getTitle = true;
          verify(request).getParameter("bookauthor");
          called_getAuthor = true;
+				 verify(request).getParameter("bookprice");
+         called_getPrice = true;
        } catch (Exception e) {}
 
        String errorMsg = "After action \"" + "/update" +
@@ -106,16 +92,7 @@ public class Module3_Task6_thru_12_IT extends Mockito{
        errorMsg = "After action \"" + "/update" +
                          "\", did not call getParameter(\"bookauthor\").";
        assertTrue(errorMsg, called_getAuthor);
-    }
-
-		@Test
-    public void module3_task9() throws Exception {
-			try {
-         verify(request).getParameter("bookprice");
-         called_getPrice = true;
-       } catch (Exception e) {}
-
-       String errorMsg = "After action \"" + "/update" +
+			 errorMsg = "After action \"" + "/update" +
                          "\", did not call getParameter(\"bookprice\").";
        assertTrue(errorMsg, called_getPrice);
     }
