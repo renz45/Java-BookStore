@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.exceptions.*;
 
 import java.io.*;
 
@@ -43,11 +44,11 @@ public class Module3_Task6_and_7_IT extends Mockito{
 
 		request = mock(HttpServletRequest.class);
 		response = mock(HttpServletResponse.class);
-
-		when(request.getPathInfo()).thenReturn("/update");
-		PowerMockito.doNothing().when(controllerServlet, "updateBook", request, response);
-		when(request.getParameter("id")).thenReturn(tempID);
-
+		try {
+			when(request.getPathInfo()).thenReturn("/update");
+			//PowerMockito.doNothing().when(controllerServlet, "updateBook", request, response);
+			when(request.getParameter("id")).thenReturn(tempID);
+		} catch (MethodNotFoundException e) {}
 		try {
 		 controllerServlet.doGet(request, response);
 		} catch (Exception e) {}
@@ -68,11 +69,11 @@ public class Module3_Task6_and_7_IT extends Mockito{
 
     @Test
     public void module3_task7() throws Exception {
-			 try {
-					PowerMockito.verifyPrivate(controllerServlet)
-											.invoke("updateBook", request, response);
-					called_updateBook = true;
-			 } catch (Throwable e) {}
+			 // try {
+				// 	PowerMockito.verifyPrivate(controllerServlet)
+				// 							.invoke("updateBook", request, response);
+				// 	called_updateBook = true;
+			 // } catch (Throwable e) {}
 
 			String errorMsg = "After action \"" + "/update" +
 												"\", did not call updateBook().";

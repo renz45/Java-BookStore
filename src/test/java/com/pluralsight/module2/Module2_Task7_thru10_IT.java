@@ -99,20 +99,23 @@ public class Module2_Task7_thru10_IT {
 
 		public void checkForm(String urlStr) {
 			// Get form and check action
-			HtmlForm form;
+			HtmlForm form = null;
 			String errorMsg = "";
 			String desiredAction = "";
-			if (urlStr.equals("Edit")) {
-				form = editPage.getFormByName(BOOK_FORM_NAME);
-				errorMsg = "Form, book_form, action not \"update\".";
-				desiredAction = "update";
-			}
-			else {
-				form = newPage.getFormByName(BOOK_FORM_NAME);
-				errorMsg = "Form, book_form, action not \"insert\".";
-				desiredAction = "insert";
-			}
+			try {
+				if (urlStr.equals("Edit")) {
+					form = editPage.getFormByName(BOOK_FORM_NAME);
+					errorMsg = "Form, book_form, action not \"update\".";
+					desiredAction = "update";
+				}
+				else {
+					form = newPage.getFormByName(BOOK_FORM_NAME);
+					errorMsg = "Form, book_form, action not \"insert\".";
+					desiredAction = "insert";
+				}
+			} catch (ElementNotFoundException e) {}
 
+			assertNotNull("Form is null.", form);
 			String action = form.getActionAttribute();
 			assertEquals(errorMsg, desiredAction, action);
 		}

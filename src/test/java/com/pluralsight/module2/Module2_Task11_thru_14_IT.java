@@ -22,9 +22,9 @@ public class Module2_Task11_thru_14_IT {
 	private String BOOK_FORM_NAME = "book_form";
 	private String indexUrl;
 	private WebClient webClient;
-  HtmlPage firstPage;
-	HtmlPage nextPage;
-	HtmlForm form;
+  HtmlPage firstPage = null;
+	HtmlPage nextPage = null;
+	HtmlForm form = null;
 
 	  @Before
 	  public void setUp() throws IOException {
@@ -33,8 +33,11 @@ public class Module2_Task11_thru_14_IT {
 			// Open the admin page
 	    firstPage = webClient.getPage(indexUrl + "/books/admin");
 			clickLink("Edit");
+			assertNotNull("Link Edit did not work.", nextPage);
 			// Get form
-			form = nextPage.getFormByName(BOOK_FORM_NAME);
+			try {
+				form = nextPage.getFormByName(BOOK_FORM_NAME);
+			} catch (ElementNotFoundException e) {}
 	  }
 	  @After
 	  public void tearDown() {
@@ -47,7 +50,7 @@ public class Module2_Task11_thru_14_IT {
     @Test
 	  public void module2_task11() {
 			assertNotNull("Link Edit did not work.", nextPage);
-
+			assertNotNull("Form is null.", form);
 			//Get id input field
 			try {
 				HtmlInput inputId = form.getInputByName("id");
@@ -69,6 +72,8 @@ public class Module2_Task11_thru_14_IT {
 
 		@Test
 	  public void module2_task12() {
+			assertNotNull("Link Edit did not work.", nextPage);
+			assertNotNull("Form is null.", form);
 			// Get title input field, check value
 			try {
 				HtmlInput inputTitle = form.getInputByName("booktitle");
@@ -82,6 +87,9 @@ public class Module2_Task11_thru_14_IT {
 
 		@Test
 	  public void module2_task13() {
+			assertNotNull("Link Edit did not work.", nextPage);
+			assertNotNull("Form is null.", form);
+
 			// Get author input field, check value
 			try {
 				HtmlInput inputAuthor = form.getInputByName("bookauthor");
@@ -95,6 +103,9 @@ public class Module2_Task11_thru_14_IT {
 
 		@Test
 	  public void module2_task14() {
+			assertNotNull("Link Edit did not work.", nextPage);
+			assertNotNull("Form is null.", form);
+
 			// Get price input field, check value
 			try {
 				HtmlInput inputPrice = form.getInputByName("bookprice");
