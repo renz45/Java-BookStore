@@ -12,52 +12,30 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.powermock.reflect.Whitebox;
+import java.lang.reflect.Method;
 
 import java.io.*;
 
-public class Module2_Task1_IT extends Mockito{
+public class Module2_Task1_IT {
 
-	static StringWriter stringWriter = new StringWriter();
-	static String tempID = "0";
+	private ControllerServlet controllerServlet;
 
-	@Mock
-  private BookDAO mockBookDAO;
-
-  @InjectMocks
-  private ControllerServlet controllerServlet;
-
-  @Before
-  public void setUp() throws Exception {
-    MockitoAnnotations.initMocks(this);
-  }
+  // @Before
+  // public void setUp() throws Exception {
+  //   controllerServlet = new ControllerServlet();
+  // }
 
 		// Verify the showEditForm() method exists in ControllerServlet
-		// Since it's private need to verify the lines of code get called
-		// through the /edit action in doGet()
     @Test
     public void module2_task1() throws Exception {
-       boolean called_getParameter = false;
-       HttpServletRequest request = mock(HttpServletRequest.class);
-       HttpServletResponse response = mock(HttpServletResponse.class);
+      Method method = null;
+      try {
+        method = Whitebox.getMethod(ControllerServlet.class,
+                  "showEditForm", HttpServletRequest.class, HttpServletResponse.class);
+      } catch (Exception e) {}
 
-       when(request.getPathInfo()).thenReturn("/edit");
-       when(request.getParameter("id")).thenReturn(tempID);
-
-       try {
-				controllerServlet.doGet(request, response);
-				try {
-           verify(request, atLeast(1)).getParameter("id");
-           called_getParameter = true;
-        } catch (Throwable e) {}
-       } catch (Exception e) {}
-
-
-
-       String errorMsg = "After action \"" + "/edit" +
-                         "\", did not call getParameter(\"id\").";
-       assertTrue(errorMsg, called_getParameter);
+      String errorMsg = "private void showEditForm() does not exist in ControllerServlet";
+      assertNotNull(errorMsg, method);
     }
 }

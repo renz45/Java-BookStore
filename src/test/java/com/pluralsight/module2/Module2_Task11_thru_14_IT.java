@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-public class Module2_Task4_IT {
+public class Module2_Task11_thru_14_IT {
 	private String BOOK_FORM_NAME = "book_form";
 	private String indexUrl;
 	private WebClient webClient;
