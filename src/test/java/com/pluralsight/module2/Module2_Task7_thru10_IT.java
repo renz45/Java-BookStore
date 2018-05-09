@@ -23,7 +23,8 @@ public class Module2_Task7_thru10_IT {
 	private String indexUrl;
 	private WebClient webClient;
   HtmlPage firstPage;
-	HtmlPage nextPage;
+	HtmlPage editPage;
+	HtmlPage newPage;
 
 	  @Before
 	  public void setUp() throws IOException {
@@ -31,7 +32,21 @@ public class Module2_Task7_thru10_IT {
 	    webClient = new WebClient();
 			// Open the admin page
 	    firstPage = webClient.getPage(indexUrl + "/books/admin");
+
+      try {
+        for (  HtmlAnchor a : firstPage.getAnchors()) {
+          String href = a.getHrefAttribute();
+          if (href.contains("edit")) {
+            editPage = a.click();
+          }
+					else if (href.contains("new")) {
+            newPage = a.click();
+          }
+        }
+      }
+      catch (  Exception e) {}
 	  }
+
 	  @After
 	  public void tearDown() {
 	    webClient.closeAllWindows();
@@ -41,34 +56,33 @@ public class Module2_Task7_thru10_IT {
 		// and adding new book
 		// In this test check the form action is conditional, and the form h2
     @Test
-	  public void module2_task3() {
-      clickLink("Edit");
-      clickLink("New");
+	  public void module2_task7() {
+      assertNotNull("Link, edit, did not work.", editPage);
+			checkForm("Edit");
     }
 
-		private void clickLink(String urlStr) {
-      String foundURL = "";
-			String desiredUrlText = urlStr.toLowerCase();
-      try {
-        for (  HtmlAnchor a : firstPage.getAnchors()) {
-          String href = a.getHrefAttribute();
-          if (href.contains(desiredUrlText)) {
-            nextPage = a.click();
-            break;
-          }
-        }
-      }
-      catch (  Exception e) {}
+		@Test
+	  public void module2_task8() {
+      assertNotNull("Link, new, did not work.", newPage);
+			checkForm("New");
+    }
 
-			assertNotNull("Link " + urlStr + " did not work.", nextPage);
+		@Test
+	  public void module2_task9() {
+			h2_correct("Edit");
+    }
 
-			h2_correct(urlStr);
+		@Test
+	  public void module2_task10() {
+			h2_correct("New");
     }
 
 	  public void h2_correct(String urlStr) {
       // First check if an H2 exists with text "New Book Form"
       boolean h2Text_correct = false;
-      DomNodeList< DomElement > list = nextPage.getElementsByTagName( "h2" );
+      DomNodeList< DomElement > list;
+			if (urlStr.equals("Edit")) list = editPage.getElementsByTagName( "h2" );
+			else list = newPage.getElementsByTagName( "h2" );
 			String h2Text = "";
 			String desiredText = urlStr + " Book Form";
 			desiredText = desiredText.replaceAll("\\s+","");
@@ -81,18 +95,25 @@ public class Module2_Task7_thru10_IT {
       }
 
       assertTrue("h2 text = " + h2Text + " , desiredText = " +desiredText, h2Text_correct);
-
-			// Get form and check action
-			HtmlForm form = nextPage.getFormByName(BOOK_FORM_NAME);
-			String action = form.getActionAttribute();
-
-			if (urlStr.equals("Edit")) {
-				assertEquals("Form, book_form, action not \"update\".",
-										 "update", action);
-			}
-			else if (urlStr.equals("New")) {
-				assertEquals("Form, book_form, action not \"insert\".",
-										 "insert", action);
-			}
 	  }
+
+		public void checkForm(String urlStr) {
+			// Get form and check action
+			HtmlForm form;
+			String errorMsg = "";
+			String desiredAction = "";
+			if (urlStr.equals("Edit")) {
+				form = editPage.getFormByName(BOOK_FORM_NAME);
+				errorMsg = "Form, book_form, action not \"update\".";
+				desiredAction = "update";
+			}
+			else {
+				form = newPage.getFormByName(BOOK_FORM_NAME);
+				errorMsg = "Form, book_form, action not \"insert\".";
+				desiredAction = "insert";
+			}
+
+			String action = form.getActionAttribute();
+			assertEquals(errorMsg, desiredAction, action);
+		}
 }
