@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 
-
+<jsp:useBean id="cart" scope="session" class="com.pluralsight.ShoppingCart" />
 <body>
 	<ul>
 	  <li><a href="list">Book Listing</a></li>
@@ -25,17 +25,17 @@
 	                <th>Title</th>
 	                <th>Author</th>
 	                <th>Price</th>
-                  <th>In Stock</th>
+                  <th>Quantity</th>
                   <th><a href="new">Add Book</a></th>
 	            </tr>
 
-      	 			<c:forEach items="${books}" var="item">
+      	 			<c:forEach items="${cart.cartItems}" var="cartItem">
                   <tr>
-                      <td> ${ item.getTitle() } </td>
-                      <td> ${ item.getAuthor() } </td>
-                      <td> <fmt:formatNumber value = "${ item.getPrice() }" type = "currency"/>  </td>
-                      <td> 10 </td>
-                      <td> <a href="#edit">Edit</a>  <a href="#delete">Delete</a> </td>
+                      <td> ${ cartItem.getTitle() } </td>
+                      <td> ${ cartItem.getAuthor() } </td>
+                      <td> <fmt:formatNumber value = "${ cartItem.getPrice() }" type = "currency"/>  </td>
+                      <td> ${ cartItem.getQuantity() } </td>
+                      <td> <a href="#updatecart">Update</a>  <a href="#deletecart">Delete</a> </td>
                   </tr>
               </c:forEach>
 	        </table>

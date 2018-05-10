@@ -33,7 +33,7 @@
 	                    <td> ${ item.getTitle() } </td>
 	                    <td> ${ item.getAuthor() } </td>
 	                    <td> <fmt:formatNumber value = "${ item.getPrice() }" type = "currency"/>  </td>
-                      <td> <a href="#addcart">Add to Cart</a> </td>
+                      <td> <a href="/cart/addcart?id=<c:out value='${item.getId()}' />">Add to Cart</a> </td>
 	                </tr>
 	            </c:forEach>
 	        </table>
