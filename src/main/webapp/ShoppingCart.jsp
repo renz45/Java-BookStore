@@ -12,8 +12,8 @@
 <jsp:useBean id="cart" scope="session" class="com.pluralsight.ShoppingCart" />
 <body>
 	<ul>
-	  <li><a href="list">Book Listing</a></li>
-    <li><a href="admin">Admin</a></li>
+	  <li><a href="/books/list">Book Listing</a></li>
+    <li><a href="/books/admin">Admin</a></li>
     <li><a class="active" href="showcart">Cart</a></li>
 	</ul>
 
@@ -26,16 +26,21 @@
 	                <th>Author</th>
 	                <th>Price</th>
                   <th>Quantity</th>
-                  <th><a href="new">Add Book</a></th>
+                  <th>Total Cost</th>
+                  <th></th>
 	            </tr>
 
-      	 			<c:forEach items="${cart.cartItems}" var="cartItem">
-                  <tr>
+      	 			<c:forEach items="${cart.cartItems}" var="cartItem" varStatus="loop">
+                  <tr><form action="/cart/update">
+                      <input type="hidden" name="index" value="<c:out value='${loop.index}' />" />
                       <td> ${ cartItem.getTitle() } </td>
                       <td> ${ cartItem.getAuthor() } </td>
                       <td> <fmt:formatNumber value = "${ cartItem.getPrice() }" type = "currency"/>  </td>
-                      <td> ${ cartItem.getQuantity() } </td>
-                      <td> <a href="#updatecart">Update</a>  <a href="#deletecart">Delete</a> </td>
+                      <td><input type="number" name="quantity" min="1" max="50" value="${ cartItem.getQuantity() }"></td>
+                      <td> ${ cartItem.getTotalCost() } </td>
+                      <td><input type="submit" value="Update">
+                          <input type="submit" formaction="/cart/delete" value="Delete"></td>
+                      </form>
                   </tr>
               </c:forEach>
 	        </table>

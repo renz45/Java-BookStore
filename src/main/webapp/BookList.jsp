@@ -14,7 +14,7 @@
 	<ul>
 	  <li><a class="active" href="list">Book Listing</a></li>
     <li><a href="admin">Admin</a></li>
-    <li><a href="showcart">Cart</a></li>
+    <li><a href="/cart/">Cart</a></li>
 	</ul>
 
     <div class="container">

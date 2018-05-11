@@ -49,10 +49,16 @@ public class CartController extends HttpServlet {
 		try {
 			switch(action) {
 				case "/addcart":
-					 addToCart(request);
+					 addToCart(request, response);
+           break;
+			 case "/update":
+					 updateCart(request, response);
+           break;
+			 case "/delete":
+				 	 deleteFromCart(request, response);
            break;
         default:
-
+					 response.sendRedirect("../ShoppingCart.jsp");
            break;
 			}
 		} catch (Exception e) {
@@ -60,10 +66,11 @@ public class CartController extends HttpServlet {
 			e.printStackTrace();
 		}
 
-    response.sendRedirect("../ShoppingCart.jsp");
+    //response.sendRedirect("../ShoppingCart.jsp");
 	}
 
-  protected void addToCart(HttpServletRequest request) {
+  protected void addToCart(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
    HttpSession session = request.getSession();
    String idStr = request.getParameter("id");
    int id = Integer.parseInt(idStr);
@@ -84,7 +91,55 @@ public class CartController extends HttpServlet {
    }
 
    cartBean.addCartItem(existingBook, quantity);
+	 RequestDispatcher dispatcher = request.getRequestDispatcher("/ShoppingCart.jsp");
+	 dispatcher.forward(request, response);
   }
+
+	protected void updateCart(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+	 HttpSession session = request.getSession();
+   String indexStr = request.getParameter("index");
+   int index = Integer.parseInt(indexStr);
+   String quantityStr = request.getParameter("quantity");
+   int quantity = Integer.parseInt(quantityStr);
+
+   ShoppingCart cartBean = null;
+   Object objCartBean = session.getAttribute("cart");
+
+   if(objCartBean!=null) {
+    cartBean = (ShoppingCart) objCartBean ;
+		cartBean.updateCartItem(index, quantity);
+   } else {
+    cartBean = new ShoppingCart();
+    session.setAttribute("cart", cartBean);
+   }
+
+	 session.setAttribute("cart", cartBean);
+	 RequestDispatcher dispatcher = request.getRequestDispatcher("/ShoppingCart.jsp");
+	 dispatcher.forward(request, response);
+  }
+
+	protected void deleteFromCart(HttpServletRequest request, HttpServletResponse response)
+		throws ServletException, IOException {
+		HttpSession session = request.getSession();
+    String indexStr = request.getParameter("index");
+    int index = Integer.parseInt(indexStr);
+
+		ShoppingCart cartBean = null;
+    Object objCartBean = session.getAttribute("cart");
+
+    if(objCartBean!=null) {
+     cartBean = (ShoppingCart) objCartBean ;
+ 		 cartBean.deleteCartItem(index);
+    } else {
+     cartBean = new ShoppingCart();
+     session.setAttribute("cart", cartBean);
+    }
+
+		session.setAttribute("cart", cartBean);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/ShoppingCart.jsp");
+ 	 	dispatcher.forward(request, response);
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

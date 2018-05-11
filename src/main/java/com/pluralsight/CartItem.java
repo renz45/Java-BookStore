@@ -20,12 +20,12 @@ public class CartItem {
         return book.getPrice();
     }
     public int getQuantity() {
-        return quantity;
+        return this.quantity;
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
     public float getTotalCost() {
-        return book.getPrice()*quantity;
+        return book.getPrice()*this.quantity;
     }
 }
