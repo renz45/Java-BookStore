@@ -66,7 +66,10 @@ public class CartController extends HttpServlet {
   protected void addToCart(HttpServletRequest request) {
    HttpSession session = request.getSession();
    String idStr = request.getParameter("id");
- 	 int id = Integer.parseInt(idStr);
+   int id = Integer.parseInt(idStr);
+   String quantityStr = request.getParameter("quantity");
+   int quantity = Integer.parseInt(quantityStr);
+
    Book existingBook = bookDAO.getBook(id);
    //String strQuantity = request.getParameter("quantity");
 
@@ -80,7 +83,7 @@ public class CartController extends HttpServlet {
     session.setAttribute("cart", cartBean);
    }
 
-   cartBean.addCartItem(existingBook, 1);
+   cartBean.addCartItem(existingBook, quantity);
   }
 
 	/**

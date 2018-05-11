@@ -25,16 +25,19 @@
 	                <th>Title</th>
 	                <th>Author</th>
 	                <th>Price</th>
+                  <th>Quantity</th>
                   <th></th>
 	            </tr>
 
 	 			<c:forEach items="${books}" var="item">
-	                <tr>
+	                <tr><form action="/cart/addcart">
+                      <input type="hidden" name="id" value="<c:out value='${item.getId()}' />" />
 	                    <td> ${ item.getTitle() } </td>
 	                    <td> ${ item.getAuthor() } </td>
 	                    <td> <fmt:formatNumber value = "${ item.getPrice() }" type = "currency"/>  </td>
-                      <td> <a href="/cart/addcart?id=<c:out value='${item.getId()}' />">Add to Cart</a> </td>
-	                </tr>
+                      <td><input type="number" name="quantity" min="1" max="50"></td>
+                      <td><input type="submit" value="Add to Cart"></td>
+	                </form></tr>
 	            </c:forEach>
 	        </table>
 	    </div>
